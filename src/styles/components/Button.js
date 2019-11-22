@@ -40,9 +40,7 @@ const colors = {
   `,
 };
 
-const Button = styled.button.attrs({
-  type: 'button',
-})`
+const Button = styled.button`
   border-radius: 3px;
   transition: background-color 0.15s ease;
   background: #7289da;
@@ -65,5 +63,9 @@ const Button = styled.button.attrs({
     }
   `}
 `;
+
+Button.defaultProps = {
+  type: 'button',
+};
 
 export default Button;
