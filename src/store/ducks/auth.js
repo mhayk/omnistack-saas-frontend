@@ -14,13 +14,13 @@ export default Creators;
 /* Initial State */
 
 export const INITIAL_STATE = Immutable({
-  singedIn: false,
+  signedIn: false,
   token: null,
 });
 
 /* Reducers */
 
-export const success = (state, { token }) => state.merge({ singedIn: true, token });
+export const success = (state, { token }) => state.merge({ signedIn: true, token });
 
 /* Reducers to types */
 
