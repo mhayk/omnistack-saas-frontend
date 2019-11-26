@@ -16,7 +16,7 @@ export default Creators;
 
 export const INITIAL_STATE = Immutable({
   data: [],
-  active: null,
+  active: JSON.parse(localStorage.getItem('@Omni:team')) || null,
 });
 
 /* Reducers */
