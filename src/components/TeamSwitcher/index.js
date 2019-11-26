@@ -5,7 +5,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import TeamsActions from '~/store/ducks/teams';
 
-import { Container, TeamList, Team } from './styles';
+import {
+  Container, TeamList, Team, NewTeam,
+} from './styles';
 
 class TeamSwitcher extends Component {
   static propTypes = {
@@ -45,6 +47,8 @@ class TeamSwitcher extends Component {
               />
             </Team>
           )) }
+
+          <NewTeam onClick={() => {}}>NOVO</NewTeam>
         </TeamList>
       </Container>
     );
