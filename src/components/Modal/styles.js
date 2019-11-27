@@ -28,6 +28,10 @@ export const Content = styled.div`
   }
 
   form {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      
     > span {
         color: #b9bbbe;
         font-size: 14px;
