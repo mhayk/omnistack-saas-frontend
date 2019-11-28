@@ -9,7 +9,7 @@ import Button from '~/styles/components/Button';
 import Modal from '~/components/Modal';
 
 import {
-  Container, TeamList, Team, NewTeam,
+  Container, TeamList, Team, NewTeam, Logout,
 } from './styles';
 
 class TeamSwitcher extends Component {
@@ -87,6 +87,8 @@ class TeamSwitcher extends Component {
             </Modal>
           )}
         </TeamList>
+
+        <Logout onClick={() => {}}>SAIR</Logout>
       </Container>
     );
   }
