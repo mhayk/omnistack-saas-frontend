@@ -11,19 +11,9 @@ import Button from '~/styles/components/Button';
 import { Container, Project } from './styles';
 
 class Projects extends Component {
-  static propTypes = {
-    getProjectsRequest: PropTypes.func.isRequired,
-    openProjectModal: PropTypes.func.isRequired,
-    closeProjectModal: PropTypes.func.isRequired,
-    activeTeam: PropTypes.shape({
-      name: PropTypes.string,
-    }).isRequired,
-    projects: PropTypes.shape({
-      data: PropTypes.array,
-      id: PropTypes.number,
-      title: PropTypes.string,
-    }),
-  };
+  state = {
+    newProject: '',
+  }
 
   componentDidMount() {
     const { getProjectsRequest, activeTeam } = this.props;
@@ -33,10 +23,24 @@ class Projects extends Component {
     }
   }
 
+  handleInputChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+  handleCreateProject = (e) => {
+    e.preventDefault();
+
+    const { createProjectRequest } = this.props;
+    const { newProject } = this.state;
+
+    createProjectRequest(newProject);
+  }
+
   render() {
     const {
       activeTeam, projects, openProjectModal, closeProjectModal,
     } = this.props;
+    const { newProject } = this.state;
 
     if (!activeTeam) return null;
     return (
@@ -59,10 +63,10 @@ class Projects extends Component {
           <Modal>
             <h1>Criar projeto</h1>
 
-            <form obSubmit={() => {}}>
+            <form onSubmit={this.handleCreateProject}>
               <span>NOME</span>
 
-              <input name="newProject" />
+              <input name="newProject" value={newProject} onChange={this.handleInputChange} />
 
               <Button size="big" type="submit">Salvar</Button>
               <Button onClick={closeProjectModal} size="small" color="gray">Cancelar</Button>
@@ -74,6 +78,23 @@ class Projects extends Component {
     );
   }
 }
+
+Projects.propTypes = {
+  getProjectsRequest: PropTypes.func.isRequired,
+  openProjectModal: PropTypes.func.isRequired,
+  closeProjectModal: PropTypes.func.isRequired,
+  createProjectRequest: PropTypes.func.isRequired,
+  activeTeam: PropTypes.shape({
+    name: PropTypes.string,
+  }).isRequired,
+  projects: PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      title: PropTypes.string,
+    })),
+    projectModalOpen: PropTypes.bool,
+  }).isRequired,
+};
 
 const mapStateToProps = (state) => ({
   activeTeam: state.teams.active,
