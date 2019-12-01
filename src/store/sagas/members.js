@@ -9,3 +9,21 @@ export function* getMembers() {
 
   yield put(MembersActions.getMembersSuccess(response.data));
 }
+
+export function* updateMember({ id, roles }) {
+  try {
+    yield call(api.put, `members/${id}`, { roles: roles.map((role) => role.id) });
+
+    yield put(toastrActions.add({
+      type: 'success',
+      title: 'Membro atualizado',
+      message: 'O membro foi atualizado com sucesso',
+    }));
+  } catch (error) {
+    yield put(toastrActions.add({
+      type: 'error',
+      title: 'Erro na operaçãooooo',
+      message: 'Houve um erro, tente novamente!',
+    }));
+  }
+}
