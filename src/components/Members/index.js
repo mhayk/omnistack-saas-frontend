@@ -10,10 +10,11 @@ import MembersActions from '~/store/ducks/members';
 
 import Modal from '~/components/Modal';
 import Button from '~/styles/components/Button';
-import { MembersList } from './styles';
+import { MembersList, Invite } from './styles';
 
 class Members extends Component {
     state = {
+      invite: '',
       roles: [],
     }
 
@@ -26,19 +27,37 @@ class Members extends Component {
       this.setState({ roles: response.data });
     }
 
+    handleInputChange = (e) => {
+      this.setState({ [e.target.name]: e.target.value });
+    }
+
     handleRolesChange = (id, roles) => {
       const { updateMemberRequest } = this.props;
 
       updateMemberRequest(id, roles);
     }
 
+    handleInvite = (e) => {
+      e.preventDefault();
+
+      const { inviteMemberRequest } = this.props;
+      const { invite } = this.state;
+
+      inviteMemberRequest(invite);
+    }
+
     render() {
       const { closeMembersModal, members } = this.props;
-      const { roles } = this.state;
+      const { roles, invite } = this.state;
 
       return (
         <Modal size="big">
           <h1>Membros</h1>
+
+          <Invite onSubmit={this.handleInvite}>
+            <input name="invite" placeholder="Convidar para o time" value={invite} onChange={this.handleInputChange} />
+            <Button type="submit">Enviar</Button>
+          </Invite>
 
           <form>
             <MembersList>
@@ -69,6 +88,20 @@ class Members extends Component {
 Members.propTypes = {
   closeMembersModal: PropTypes.func.isRequired,
   getMembersRequest: PropTypes.func.isRequired,
+  inviteMemberRequest: PropTypes.func.isRequired,
+  updateMemberRequest: PropTypes.func.isRequired,
+  members: PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      user: PropTypes.shape({
+        name: PropTypes.string,
+      }),
+      roles: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number,
+        name: PropTypes.string,
+      })),
+    })),
+  }).isRequired,
 };
 
 const mapStateToProps = (state) => ({
