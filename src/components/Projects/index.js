@@ -91,7 +91,7 @@ Projects.propTypes = {
   openMembersModal: PropTypes.func.isRequired,
   activeTeam: PropTypes.shape({
     name: PropTypes.string,
-  }).isRequired,
+  }),
   projects: PropTypes.shape({
     data: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number,
@@ -102,6 +102,10 @@ Projects.propTypes = {
   members: PropTypes.shape({
     membersModalOpen: PropTypes.bool,
   }).isRequired,
+};
+
+Projects.defaultProps = {
+  activeTeam: null,
 };
 
 const mapStateToProps = (state) => ({
